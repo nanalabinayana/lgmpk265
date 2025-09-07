@@ -1,0 +1,231 @@
+/* =========================================================
+   LGMCakra — FULL CSS (flat, fixed sizes, Urbanist)
+   ========================================================= */
+
+/* Font Urbanist */
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700&display=swap");
+
+/* =========================
+   TOKENS
+   ========================= */
+:root{
+  --green:#0B7F6C;     /* header: Self + LGM */
+  --orange:#E17125;    /* header: Study Plan + Goals */
+  --krem:#FFF1C4;      /* body */
+  --white:#FFFFFF;
+  --text:#1E1E1E;
+
+  /* radius & paddings tetap */
+  --r-hdr:15px;        /* header radius: 40 40 0 0 */
+  --r-bdy:10px;        /* body radius:   0 0 28 28 */
+  --pad-x:22px;
+  --pad-y:18px;
+
+  /* grid gap default (JS bisa override via --gap-px) */
+  --gap:16px;
+}
+
+/* =========================
+   STAGE + BACKGROUND
+   ========================= */
+#stage{
+  position:relative;
+  width:100%;
+  max-width:1080px;
+  margin-inline:auto;
+  aspect-ratio:1080/1350;
+  background:#fff;
+  overflow:hidden;
+  font-family:"Urbanist", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+#bgImg{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  pointer-events:none; user-select:none;
+}
+
+/* =========================
+   FLOW GRID (tidak responsif)
+   ========================= */
+.flow-wrap{
+  position:absolute;
+  left:var(--left-px,0);
+  top:var(--top-px,0);           /* di-override JS: 375px / 438px (scaled) */
+  width:var(--w-px,100%);
+  display:grid;
+  grid-template-columns:repeat(var(--cols,2), 1fr); /* 2 kolom tetap utk 2×2 & 1×2 */
+  gap:var(--gap-px,var(--gap));
+  padding:var(--padY-px,0) var(--padX-px,0);
+}
+.flow-wrap.is-1{ grid-template-columns:1fr; }      /* 2×1 vertikal */
+.flow-wrap.is-3 > .box:nth-child(3){ grid-column:1 / -1; }
+
+/* =========================
+   ABS OVERLAY (kalau ada)
+   ========================= */
+.overlay-abs.box{ position:absolute; }
+
+/* =========================
+   BOX (flat, no shadow)
+   ========================= */
+.box{ color:var(--text); }
+
+/* Header (pil) — CENTERED */
+.box .box-title{
+  background: var(--header-bg, var(--orange)); /* default oranye */
+  color: var(--white);
+  font-weight:700;          /* Bold */
+  font-size:27px;           /* FIXED */
+  line-height:1.2;
+  padding:10px 18px;
+  border-radius: var(--r-hdr) var(--r-hdr) 0 0; /* 40 40 0 0 */
+  text-align:center;        /* ⬅️ rata tengah */
+}
+
+/* Body (krem) */
+.box .box-body{
+  background: var(--body-bg, var(--krem));
+  color: var(--text);
+  font-weight:400;          /* Regular */
+  font-size:17px;           /* FIXED */
+  line-height:1.45;
+  padding: var(--pad-y) var(--pad-x);
+  border-radius: 0 0 var(--r-bdy) var(--r-bdy); /* 0 0 28 28 */
+  border: none;
+}
+/* Terapkan pada teks paragraf di dalam body box */
+.box .box-body p{
+  text-align: justify;           /* rata kiri-kanan */
+  text-justify: inter-word;      /* sebar jarak antar-kata (bukan antar-huruf) */
+  text-align-last: left;         /* baris terakhir tetap rata kiri */
+  hyphens: auto;                 /* pemenggalan kata otomatis */
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  overflow-wrap: break-word;     /* pecah kata panjang jika perlu */
+  word-break: normal;
+}
+
+/* Jangan justify daftar—biar tetap enak dibaca */
+.box .box-body ul,
+.box .box-body ol{
+  text-align: left;
+}
+
+/* (opsional) Heading di-‘balance’ agar judul lebih rapi di 2–3 baris */
+.box .box-title{
+  text-wrap: balance;
+}
+
+/* =========================
+   THEME PER BOX (dari JS)
+   ========================= */
+.theme-green  .box-title{ --header-bg: var(--green); }
+.theme-orange .box-title{ --header-bg: var(--orange); }
+.body-solid  .box-body{ --body-bg: var(--krem); }
+.body-ghost  .box-body{ --body-bg: transparent; }
+
+/* =========================
+   FORM KIRI
+   ========================= */
+#inputsArea .form-label{
+  font-weight:700;
+  font-family:"Urbanist", system-ui, sans-serif;
+}
+#inputsArea textarea{
+  border:1px solid #E1E4EA;
+  resize:vertical;
+  font-family:"Urbanist", system-ui, sans-serif;
+  font-size:14px;
+}
+.fmt-bar{ display:flex; gap:.5rem; margin:.25rem 0 .5rem; }
+.fmt-bar .btn{ padding:.15rem .5rem; line-height:1; }
+
+/* Counter */
+.mini.counter{ font-size:.85rem; opacity:.95; }
+.mini.counter.ok{ color:#198754; }
+.mini.counter.near,
+.mini.counter.bad{ color:#dc3545; }
+
+/* =========================
+   KONTEN BODY (hasil format)
+   ========================= */
+.box .box-body p{ margin:.25rem 0; }
+.box .box-body ul,
+.box .box-body ol{ margin:.25rem 0 .25rem 1.25rem; }
+.box .box-body li{ margin:.1rem 0; }
+
+/* =========================
+   PAGER (minimal)
+   ========================= */
+#pager .nav-link{
+  border:1px solid #E1E4EA;
+  margin-right:.25rem;
+  border-radius:8px;
+  padding:.25rem .55rem;
+  background:#fff;
+}
+#pager .nav-link.active{
+  background:#0F766E;
+  color:#fff;
+  border-color:#0F766E;
+}
+
+/* =========================
+   (Tidak ada media query) — ukuran fixed
+   ========================= */
+/* Halaman 1 */
+.page-1 .box-body {
+  background: transparent !important;
+}
+
+/* Halaman 4 & 5 (Life Grand Map) */
+.page-4 .box-body,
+.page-5 .box-body {
+  background: transparent !important;
+}
+/* Body box hijau (Self Potential & LGM) transparan + corner 50px */
+.theme-green .box-body {
+  background: transparent !important; /* isi transparan */
+  border-radius: 50px !important;     /* sudut 50px semua sisi */
+}
+/* ===== Default (independen) ===== */
+:root{
+  /* Header default = pil atas */
+  --hdr-r1: 30px;  /* tl */
+  --hdr-r2: 30px;  /* tr */
+  --hdr-r3: 0px;   /* br */
+  --hdr-r4: 0px;   /* bl */
+
+  /* Body default = tetap seperti kamu: 0 0 28 28 */
+  --bdy-r1: 0px;   /* tl */
+  --bdy-r2: 0px;   /* tr */
+  --bdy-r3: 28px;  /* br */
+  --bdy-r4: 28px;  /* bl */
+}
+
+/* Terapkan token ke elemen (tidak saling bergantung) */
+.box .box-title{ border-radius: var(--hdr-r1) var(--hdr-r2) var(--hdr-r3) var(--hdr-r4); }
+.box .box-body { border-radius: var(--bdy-r1) var(--bdy-r2) var(--bdy-r3) var(--bdy-r4); }
+
+/* ===== Override per tema (hanya header, body tetap default) ===== */
+
+/* Hijau: semua sudut HEADER = 40px (body tidak diubah) */
+.theme-green .box-title{
+  --hdr-r1: 40px; --hdr-r2: 40px; --hdr-r3: 40px; --hdr-r4: 40px;
+}
+
+/* Oranye: HEADER tetap pil atas 40 40 0 0 (body tidak diubah) */
+.theme-orange .box-title{
+  --hdr-r1: 30px; --hdr-r2: 30px; --hdr-r3: 0px;  --hdr-r4: 0px;
+}
+
+/* (Opsional) Kalau suatu saat mau ubah BODY saja per-tema: */
+/*
+.theme-green .box-body{
+  --bdy-r1: 0px; --bdy-r2: 0px; --bdy-r3: 40px; --bdy-r4: 40px;
+}
+.theme-orange .box-body{
+  --bdy-r1: 0px; --bdy-r2: 0px; --bdy-r3: 0px;  --bdy-r4: 40px;
+}
+*/
